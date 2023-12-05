@@ -1,6 +1,6 @@
 <?php
 function loadStringForJson(string $message): string{
-    $fileJsonPath = file_get_contents(__DIR__ . '/param.json');
+    $fileJsonPath = file_get_contents(__DIR__ . '/testString.json');
     $data = json_decode($fileJsonPath, true);
     return $data[$message];
 }

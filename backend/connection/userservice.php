@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__  . '/utils/loadStringForJson.php';
+include __DIR__ . '/utils/utilsFunction.php';
 
 class UserService
 {
