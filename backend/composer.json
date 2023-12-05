@@ -1,0 +1,6 @@
+{
+  "require": {
+    "drahosistvan/vatvalidation": "*",
+    "ext-pdo": "*"
+  }
+}

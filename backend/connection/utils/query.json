@@ -1,0 +1,4 @@
+{
+  "insert_new_user" : "INSERT INTO \"User\" (\"email\", \"name\", \"surname\", \"password\", \"vat_number\") VALUES (?, ?, ?, ?, ?)",
+   "login" : "SELECT * FROM \"User\" WHERE email = :email AND password = :hashedPassword"
+}

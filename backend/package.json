@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.21.0",
+    "prettier": "^3.0.3",
+    "prisma": "^5.6.0"
+  },
+  "scripts": {
+    "prettier": "prettier"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.6.0"
+  }
+}

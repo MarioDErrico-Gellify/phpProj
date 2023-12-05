@@ -1,0 +1,29 @@
+services:
+  my-apache-php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: my-apache-php
+    ports:
+      - '8081:80'
+    volumes:
+      - ./backend:/var/www/html
+    environment:
+      PHP_ENABLE: "true"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:14.7
+    container_name: my-new-postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    volumes:
+      - todo-postgres-data:/var/lib/postgresql/data
+
+volumes:
+  todo-postgres-data:

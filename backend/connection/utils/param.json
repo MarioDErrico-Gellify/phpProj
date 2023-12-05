@@ -1,0 +1,14 @@
+{
+    "connectionFail" : "Something went wrong during db connection",
+    "userAddedSuccessfully" : "Your account has created",
+    "LoginFail": "Invalid User Name or password",
+    "userAlreadyExist" : "This account with this email Already Exist",
+    "passwordReset" : "Forgot password ? click this link",
+    "overpopulate" : "populate all fields",
+    "errorQuery" : "Error query",
+    "userNotExist" : "User not exist",
+    "welcometomywebsite" : "This is your session env :"
+
+  }
+
+
