@@ -63,5 +63,22 @@ class UserService
             return loadStringForJson("userAlreadyExist");
         }
     }
+    public function updatePassword(string $password, string $email): bool {
+        $pdo = new PDO("pgsql:host=$this->host;dbname=$this->dbName;port=$this->port", 'myuser', $this->password);
+        $pdo->beginTransaction();
+        $sql = loadQueryString("resetPassword");
+        try {
+            $stmt = $pdo->prepare($sql);
+            $sha1 = md5($password);
+            $stmt->bindParam(1, $sha1);
+            $stmt->bindParam(2, $email);
+            $stmt->execute();
+            $pdo->commit();
+            return true;
+        } catch (PDOException $e) {
+            $pdo->rollBack();
+            return $e->getMessage();
+        }
+    }
 
 }

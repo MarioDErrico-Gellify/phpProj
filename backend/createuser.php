@@ -46,6 +46,16 @@ class CreateUser
         }
         return false;
     }
+
+    public function updatePassword(): bool
+    {
+        $connection = singlePdoConnection();
+        if ($connection->updatePassword($this->email,$this->password)) {
+            return true;
+        }
+        return false;
+    }
+
 }
 
 
