@@ -24,15 +24,20 @@ include 'createuser.php'
 <form method="post" action="index.php">
     <label for="logMail">Email:</label>
     <input type="email" name="logMail" id="logMail" required><br><br>
-
     <label for="LogPassword">Password:</label>
     <input type="password" name="LogPassword" id="LogPassword" required><br><br>
 
     <input type="submit" value="Login">
 </form>
 
-
-<a href='index.php'>Password Dimenticata</a>
+<a>Password Dimenticata?</a>
+<form method="post" action="index.php">
+    <label for="logMail">Nuova Password:</label>
+    <input type="password" name="resetPassword" id='resetPassword' required><br><br>
+    <label for="LogPassword">Email associata al tuo account:</label>
+    <input type="email" name="emailassoc" id='emailassoc'><br><br>
+    <input type="submit" value="reset">
+</form>
 <?php
 
 if (isset($_POST['nome'],$_POST['cognome'], $_POST['password'] , $_POST['vatnumber'] , $_POST['email'])) {
@@ -48,6 +53,14 @@ if (isset($_POST['LogPassword'], $_POST['logMail'])) {
         echo $_SESSION['email_session'] . loadStringForJson("welcometomywebsite");
     }
 
+}
+if (isset($_POST['resetPassword'],$_POST['emailassoc'])){
+    $updateData = new CreateUser($_POST['emailassoc'],"","",$_POST['resetPassword'],"");
+    $update = $updateData->updatePassword();
+    if ($update){
+        echo true;
+        echo "password cambiata";
+    }
 }
 
 ?>
