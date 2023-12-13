@@ -12,7 +12,7 @@ function loadQueryString(string $query) : string{
 }
 
 function encryption(string $password ): string{
-    return md5($password);
+    return password_hash($password , PASSWORD_ARGON2I);
 }
 
 function  singlePdoConnection(): UserService | PDO{

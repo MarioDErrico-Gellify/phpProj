@@ -4,81 +4,87 @@ include __DIR__ . '/utils/utilsFunction.php';
 
 class UserService
 {
-    private string $password;
-    private string $host;
-    private string $port;
-    private string $dbName;
-
+    private PDO $pdo;
 
     public function __construct(string $password, string $host, string $port, string $dbName)
     {
-        $this->password = $password;
-        $this->host = $host;
-        $this->port = $port;
-        $this->dbName = $dbName;
         try {
-            $pdo = new PDO("pgsql:host=$this->host;dbname=$this->dbName;port=$this->port", 'myuser', $this->password);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->pdo = new PDO("pgsql:host=$host;dbname=$dbName;port=$port", 'myuser', $password);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            return loadStringForJson("connectionFail" . $e->getMessage());
-
+            throw new Exception(loadStringForJson("connectionFail") . $e->getMessage());
         }
-        return null;
     }
-
-    public function getUser(string $email, string $password): string | bool
+    public function getUser(string $email, string $password): bool
     {
-        $pdo = new PDO("pgsql:host=$this->host;dbname=$this->dbName;port=$this->port", 'myuser', $this->password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = loadQueryString("login");
         try {
-            $stmt = $pdo->prepare($sql);
+            $stmt = $this->pdo->prepare($sql);
             $stmt->bindParam(':email', $email);
-            $sha1 = md5($password);
-            $stmt->bindParam(':hashedPassword', $sha1);
             $stmt->execute();
-            if ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($row && password_verify($password, $row['password'])) {
                 echo "Welcome " . $row['name'];
                 return true;
-            }else{
+            } else {
                 echo loadStringForJson("userNotExist");
+                return false;
             }
         } catch (PDOException $e) {
             return $e->getMessage();
         }
-        return false;
     }
-    public function insertToDb(string $email, string $name, string $surname, string $password, string $vat_number): null|string
+
+
+    public function insertToDb(string $email, string $name, string $surname, string $password, string $vat_number): ?string
     {
-        $pdo = new PDO("pgsql:host=$this->host;dbname=$this->dbName;port=$this->port", 'myuser', $this->password);
-        $pdo->beginTransaction();
+        $this->pdo->beginTransaction();
         $sql = loadQueryString("insert_new_user");
         try {
-            $stmt = $pdo->prepare($sql);
-            $password_encryption = encryption($password);
-            $stmt->execute([$email, $name, $surname, $password_encryption, $vat_number]);
-            $pdo->commit();
+            $stmt = $this->pdo->prepare($sql);
+            $hashedPassword = encryption($password);
+            $stmt->execute([$email, $name, $surname, $hashedPassword, $vat_number]);
+            $this->pdo->commit();
             return loadStringForJson("userAddedSuccessfully");
         } catch (PDOException) {
-            return loadStringForJson("userAlreadyExist");
+            $this->pdo->rollBack();
+            return loadStringForJson("userAlreadyExist" );
         }
     }
-    public function updatePassword(string $password, string $email): bool {
-        $pdo = new PDO("pgsql:host=$this->host;dbname=$this->dbName;port=$this->port", 'myuser', $this->password);
-        $pdo->beginTransaction();
-        $sql = loadQueryString("resetPassword");
+    public function updatePassword(string $password, string $email): bool
+    {
+        $this->pdo->beginTransaction();
         try {
-            $stmt = $pdo->prepare($sql);
-            $sha1 = md5($password);
-            $stmt->bindParam(1, $sha1);
-            $stmt->bindParam(2, $email);
+            if (!$this->userExists($email)) {
+                $this->pdo->rollBack();
+                echo loadStringForJson("userNotExistPasswordReset");
+                return false;
+            }
+            $hashedPassword = password_hash($password, PASSWORD_ARGON2I);
+
+            $sql = loadQueryString("resetPassword");
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':hashedPassword', $hashedPassword);
+            $stmt->bindParam(':email', $email);
             $stmt->execute();
-            $pdo->commit();
+            $this->pdo->commit();
+            echo loadStringForJson("updatedPassword");
             return true;
         } catch (PDOException $e) {
-            $pdo->rollBack();
-            return $e->getMessage();
+            $this->pdo->rollBack();
+            echo $e->getMessage();
+            throw new Exception($e->getMessage());
         }
     }
 
+    private function userExists(string $email): bool
+    {
+        $sql = loadQueryString("checkUserExists");
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        return $stmt->fetchColumn() > 0;
+    }
+
 }
+
