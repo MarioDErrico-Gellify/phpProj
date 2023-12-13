@@ -9,7 +9,7 @@ class UserService
     public function __construct(string $password, string $host, string $port, string $dbName)
     {
         try {
-            $this->pdo = new PDO("pgsql:host=$host;dbname=$dbName;port=$port", 'myuser', $password);
+            $this->pdo = new PDO("mysql:host=$host;dbname=$dbName;port=$port", 'myuser', $password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             throw new Exception(loadStringForJson("connectionFail") . $e->getMessage());
@@ -34,7 +34,6 @@ class UserService
             return $e->getMessage();
         }
     }
-
 
     public function insertToDb(string $email, string $name, string $surname, string $password, string $vat_number): ?string
     {

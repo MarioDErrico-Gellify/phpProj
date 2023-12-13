@@ -22,7 +22,7 @@ destroy_localstack(){
 compose_localstack(){
    docker compose up -d
    docker-compose exec my-apache-php php -m | grep pdo_pgsql
-   docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' my-postgres
+   docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' my-mysql
 }
 
 if [ -f compose.yaml ]

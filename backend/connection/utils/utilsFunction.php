@@ -15,9 +15,8 @@ function encryption(string $password ): string{
     return password_hash($password , PASSWORD_ARGON2I);
 }
 
-function  singlePdoConnection(): UserService | PDO{
-    return new UserService("mypassword" , "postgres" , "5432" , "mydatabase");
+function singlePdoConnection(): UserService {
+    return new UserService("mypassword", "localhost", "3306", "mydatabase",'myuser');
 }
-
 
 
