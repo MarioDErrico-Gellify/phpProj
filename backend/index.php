@@ -57,10 +57,6 @@ if (isset($_POST['LogPassword'], $_POST['logMail'])) {
 if (isset($_POST['resetPassword'],$_POST['emailassoc'])){
     $updateData = new CreateUser($_POST['emailassoc'],"","",$_POST['resetPassword'],"");
     $update = $updateData->updatePassword();
-    if ($update){
-        echo true;
-        echo "password cambiata";
-    }
 }
 
 ?>

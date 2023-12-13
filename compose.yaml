@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   my-apache-php:
     build:
@@ -10,20 +12,26 @@ services:
       - ./backend:/var/www/html
     environment:
       PHP_ENABLE: "true"
+      MYSQL_HOST: "mysql"
+      MYSQL_DATABASE: "mydatabase"
+      MYSQL_USER: "myuser"
+      MYSQL_PASSWORD: "mypassword"
+      MYSQL_PORT: "3306"
     depends_on:
-      - postgres
+      - mysql
 
-  postgres:
-    image: postgres:14.7
-    container_name: my-new-postgres
+  mysql:
+    image: mysql:latest
+    container_name: my-mysql
     ports:
-      - '5432:5432'
+      - '3306:3306'
     environment:
-      POSTGRES_DB: mydatabase
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+      MYSQL_ROOT_PASSWORD: rootpassword
     volumes:
-      - todo-postgres-data:/var/lib/postgresql/data
+      - mysql-data:/var/lib/mysql
 
 volumes:
-  todo-postgres-data:
+  mysql-data:

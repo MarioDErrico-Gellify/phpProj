@@ -27,6 +27,6 @@ and :
  ```shell
     npm prisma generate 
     
-    npx prisma migrate dev --name init 
+    npx prisma db push 
    ```
 Now app is available to http://localhost:8081/ address
