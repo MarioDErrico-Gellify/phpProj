@@ -40,7 +40,7 @@ class UserService
     {
         $vat_valid_number = vatValidationDrashosistvan($vat_number);
         if ($vat_valid_number){
-            return loadStringForJson("vat number is incorrect");
+            return loadStringForJson("vatIsNotValid");
         }
         $this->pdo->beginTransaction();
         $sql = loadQueryString("insert_new_user");

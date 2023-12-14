@@ -19,7 +19,7 @@ function encryption(string $password ): string{
 }
 
 function singlePdoConnection(): UserService {
-    return new UserService("mypassword", "ipimage", "3306", "mydatabase");
+    return new UserService("mypassword", "insertip", "3306", "mydatabase");
 }
 
 function vatValidationDrashosistvan(string $vatNumber) : bool{
