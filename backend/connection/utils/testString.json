@@ -9,7 +9,8 @@
     "userNotExist" : "User not exist",
     "welcometomywebsite" : "This is your session env :",
     "userNotExistPasswordReset" : "no users associated with this email",
-    "updatedPassword" : "updated password"
+    "updatedPassword" : "updated password",
+    "vatIsNotValid" : "vat number is incorrect"
 
   }
 

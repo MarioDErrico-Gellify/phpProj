@@ -1,14 +1,9 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
-    ],
-    "content-hash": "0cc4039380dbb20b1a4b243dae3472eb",
     "packages": [
         {
             "name": "drahosistvan/vatvalidation",
             "version": "1.0.2",
+            "version_normalized": "1.0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drahosistvan/vatvalidation.git",
@@ -27,7 +22,9 @@
                 "friendsofphp/php-cs-fixer": "~2",
                 "phpunit/phpunit": "~5.0"
             },
+            "time": "2018-03-21T13:45:21+00:00",
             "type": "library",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "VatValidation\\": "src/VatValidation/"
@@ -57,21 +54,9 @@
                 "issues": "https://github.com/drahosistvan/vatvalidation/issues",
                 "source": "https://github.com/drahosistvan/vatvalidation"
             },
-            "time": "2018-03-21T13:45:21+00:00"
+            "install-path": "../drahosistvan/vatvalidation"
         }
     ],
-    "packages-dev": [],
-    "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
-    "prefer-stable": false,
-    "prefer-lowest": false,
-    "platform": {
-        "ext-pdo": "*"
-    },
-    "platform-dev": [],
-    "platform-overrides": {
-        "php": "8.2.13"
-    },
-    "plugin-api-version": "2.6.0"
+    "dev": true,
+    "dev-package-names": []
 }

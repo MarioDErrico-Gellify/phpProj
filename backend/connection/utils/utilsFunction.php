@@ -1,4 +1,7 @@
 <?php
+
+use VatValidation\VatValidation;
+
 function loadStringForJson(string $message): string{
     $fileJsonPath = file_get_contents(__DIR__ . '/testString.json');
     $data = json_decode($fileJsonPath, true);
@@ -16,7 +19,21 @@ function encryption(string $password ): string{
 }
 
 function singlePdoConnection(): UserService {
-    return new UserService("mypassword", "localhost", "3306", "mydatabase",'myuser');
+    return new UserService("mypassword", "192.168.16.2", "3306", "mydatabase");
+}
+
+function vatValidationDrashosistvan(string $vatNumber) : bool{
+    $validation = new VatValidation();
+    $validation->validate($vatNumber);
+    if ($validation->valid) {
+        print $validation->name;
+        print $validation->address;
+        print $validation->countryCode;
+        print $validation->vatNumber;
+        print $validation->valid;
+        return true;
+    }
+    return false;
 }
 
 
