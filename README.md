@@ -29,4 +29,16 @@ and :
     
     npx prisma db push 
    ```
+## **change string connection** ##
+![](C:\phpProj\image\ipaddress.PNG)
+
+insert into :
+function singlePdoConnection(): UserService {
+    new UserService("mypassword", "ipimagescreenshot", "3306", "mydatabase");
+}
+
+
+path to function : backend/connection/utils/utilsFunction.php
+
+
 Now app is available to http://localhost:8081/ address

@@ -36,11 +36,11 @@ class UserService
         }
     }
 
-    public function insertToDb(string $email, string $name, string $surname, string $password, string $vat_number): ?string
+    public function insertToDb(string $email, string $name, string $surname, string $password, string $vat_number): null| string
     {
         $vat_valid_number = vatValidationDrashosistvan($vat_number);
-        if (!$vat_valid_number){
-            return loadStringForJson("vat number is incorrect");
+        if ($vat_valid_number){
+            return loadStringForJson("vatIsNotValid");
         }
         $this->pdo->beginTransaction();
         $sql = loadQueryString("insert_new_user");
