@@ -19,18 +19,13 @@ function encryption(string $password ): string{
 }
 
 function singlePdoConnection(): UserService {
-    return new UserService("mypassword", "192.168.16.2", "3306", "mydatabase");
+    return new UserService("mypassword", "ipimage", "3306", "mydatabase");
 }
 
 function vatValidationDrashosistvan(string $vatNumber) : bool{
     $validation = new VatValidation();
     $validation->validate($vatNumber);
     if ($validation->valid) {
-        print $validation->name;
-        print $validation->address;
-        print $validation->countryCode;
-        print $validation->vatNumber;
-        print $validation->valid;
         return true;
     }
     return false;
