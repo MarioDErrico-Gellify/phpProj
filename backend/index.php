@@ -39,6 +39,8 @@ include 'createuser.php'
     <input type="submit" value="reset">
 </form>
 <?php
+$dsn = "mysql:host=127.0.0.1;port=3306;dbname=mydatabase;protocol=tcp";
+
 
 if (isset($_POST['nome'],$_POST['cognome'], $_POST['password'] , $_POST['vatnumber'] , $_POST['email'])) {
     $createUser = new CreateUser($_POST['email'], $_POST['nome'], $_POST['cognome'], $_POST['password'], $_POST['vatnumber']);

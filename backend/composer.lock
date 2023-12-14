@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1e4574ffb8d31a14b78b1abdebdc40e9",
+    "content-hash": "0cc4039380dbb20b1a4b243dae3472eb",
     "packages": [
         {
             "name": "drahosistvan/vatvalidation",
@@ -66,7 +66,12 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-pdo": "*"
+    },
     "platform-dev": [],
+    "platform-overrides": {
+        "php": "8.2.13"
+    },
     "plugin-api-version": "2.6.0"
 }

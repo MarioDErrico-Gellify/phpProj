@@ -9,7 +9,8 @@ class UserService
     public function __construct(string $password, string $host, string $port, string $dbName)
     {
         try {
-            $this->pdo = new PDO("mysql:host=$host;dbname=$dbName;port=$port", 'myuser', $password);
+
+            $this->pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbName;protocol=tcp", 'myuser', $password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             throw new Exception(loadStringForJson("connectionFail") . $e->getMessage());
@@ -37,6 +38,10 @@ class UserService
 
     public function insertToDb(string $email, string $name, string $surname, string $password, string $vat_number): ?string
     {
+        $vat_valid_number = vatValidationDrashosistvan($vat_number);
+        if (!$vat_valid_number){
+            return loadStringForJson("vat number is incorrect");
+        }
         $this->pdo->beginTransaction();
         $sql = loadQueryString("insert_new_user");
         try {
@@ -84,6 +89,7 @@ class UserService
         $stmt->execute();
         return $stmt->fetchColumn() > 0;
     }
+
 
 }
 
