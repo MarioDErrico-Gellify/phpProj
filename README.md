@@ -6,7 +6,7 @@ Download and install docker desktop to : https://www.docker.com/get-started/
 
 this project creates a localstack with 2 different docker containers
 1) my-apache with the php module and pdo class.
-2) postgresql 
+2) mysql
 
 #create localstack.
 To create localstack: launch the command in the root, via a git bash console:
